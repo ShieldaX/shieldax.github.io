@@ -3,20 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Error Cache Miss 调试错误 | CODESIGN</title>
+  <title>锋利的Node.js图片处理库sharp | CODESIGN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在使用jqueryForm进行调试的时候（以Ajax方式提交表单），发现程序逻辑运行没有问题，但是每次打开chrome的开发者工具，console中总是出现一条Failed to load resource: net::ERR_CACHE_MISS的错误信息，怀疑是Jade编译出的javascript文本有问题，发现分离出单独的js脚本也没有效果。
-最后在百度上搜到了阿里云的一个帖子：http:/">
+  <meta name="description" content="由于项目中需要用户上传的头像的功能，所以就参照一些网站实现在线图片裁切的功能。经过朋友推荐和多方比较，前端采用 Jcrop 和 jQuery Form 实现用户界面，把用户要裁切的图片区域和图片异步的方式提交后端。而后端则负责对图片的裁切，输出并保存为用户头像。
+这篇主要以Express框架为例介绍如何在Node.js开发环境中使用sharp库处理图片。
+sharp是由伦敦的一位开发者lovell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Error Cache Miss 调试错误">
-<meta property="og:url" content="http://shieldax.github.io/2014/10/31/Error-Cache-Miss-调试错误/">
+<meta property="og:title" content="锋利的Node.js图片处理库sharp">
+<meta property="og:url" content="http://shieldax.github.io/2014/10/31/锋利的Node-js图片处理库sharp/">
 <meta property="og:site_name" content="CODESIGN">
-<meta property="og:description" content="在使用jqueryForm进行调试的时候（以Ajax方式提交表单），发现程序逻辑运行没有问题，但是每次打开chrome的开发者工具，console中总是出现一条Failed to load resource: net::ERR_CACHE_MISS的错误信息，怀疑是Jade编译出的javascript文本有问题，发现分离出单独的js脚本也没有效果。
-最后在百度上搜到了阿里云的一个帖子：http:/">
+<meta property="og:description" content="由于项目中需要用户上传的头像的功能，所以就参照一些网站实现在线图片裁切的功能。经过朋友推荐和多方比较，前端采用 Jcrop 和 jQuery Form 实现用户界面，把用户要裁切的图片区域和图片异步的方式提交后端。而后端则负责对图片的裁切，输出并保存为用户头像。
+这篇主要以Express框架为例介绍如何在Node.js开发环境中使用sharp库处理图片。
+sharp是由伦敦的一位开发者lovell">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Error Cache Miss 调试错误">
-<meta name="twitter:description" content="在使用jqueryForm进行调试的时候（以Ajax方式提交表单），发现程序逻辑运行没有问题，但是每次打开chrome的开发者工具，console中总是出现一条Failed to load resource: net::ERR_CACHE_MISS的错误信息，怀疑是Jade编译出的javascript文本有问题，发现分离出单独的js脚本也没有效果。
-最后在百度上搜到了阿里云的一个帖子：http:/">
+<meta name="twitter:title" content="锋利的Node.js图片处理库sharp">
+<meta name="twitter:description" content="由于项目中需要用户上传的头像的功能，所以就参照一些网站实现在线图片裁切的功能。经过朋友推荐和多方比较，前端采用 Jcrop 和 jQuery Form 实现用户界面，把用户要裁切的图片区域和图片异步的方式提交后端。而后端则负责对图片的裁切，输出并保存为用户头像。
+这篇主要以Express框架为例介绍如何在Node.js开发环境中使用sharp库处理图片。
+sharp是由伦敦的一位开发者lovell">
 
   
     <link rel="alternative" href="/atom.xml" title="CODESIGN" type="application/atom+xml">
@@ -80,10 +83,10 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Error-Cache-Miss-调试错误" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-锋利的Node-js图片处理库sharp" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2014/10/31/Error-Cache-Miss-调试错误/" class="article-date">
-  <time datetime="2014-10-31T01:06:42.000Z" itemprop="datePublished">10月 31 2014</time>
+    <a href="/2014/10/31/锋利的Node-js图片处理库sharp/" class="article-date">
+  <time datetime="2014-10-31T14:12:59.000Z" itemprop="datePublished">10月 31 2014</time>
 </a>
     
   </div>
@@ -94,7 +97,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         
   
     <h1 class="article-title" itemprop="name">
-      Error Cache Miss 调试错误
+      锋利的Node.js图片处理库sharp
     </h1>
   
 
@@ -102,26 +105,38 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在使用jqueryForm进行调试的时候（以Ajax方式提交表单），发现程序逻辑运行没有问题，但是每次打开chrome的开发者工具，console中总是出现一条<code>Failed to load resource: net::ERR_CACHE_MISS</code>的错误信息，怀疑是Jade编译出的javascript文本有问题，发现分离出单独的js脚本也没有效果。</p>
-<p>最后在百度上搜到了阿里云的一个帖子：<br><a href="http://bbs.aliyun.com/read/178977.html" target="_blank" rel="external">http://bbs.aliyun.com/read/178977.html</a></p>
-<p>核心内容是这样的：</p>
-<p>开发人员工具载入缓存的时候，说找不到资源。<br>问题根本在于你先打开页面，再打开chrome的开发人员工具。而页面本身设置了<br><a id="more"></a><br>no-store 无缓存，所以后者打开的开发人员工具去不到缓存。如果你已经打开开发者工具的时候，再刷新就不会有这个错误了…</p>
-<p>检查了一下页面Header，果然是通过<code>Cache-Control: max-age=0</code>使得页面没有缓存可以被读取。<br>好在不影响程序本身的运行，暂时可以忽略。</p>
-<p>Continue Coding！</p>
+        <p>由于项目中需要用户上传的头像的功能，所以就参照一些网站实现在线图片裁切的功能。<br>经过朋友推荐和多方比较，前端采用 Jcrop 和 jQuery Form 实现用户界面，把用户要裁切的图片区域和图片异步的方式提交后端。<br>而后端则负责对图片的裁切，输出并保存为用户头像。</p>
+<p>这篇主要以Express框架为例介绍如何在Node.js开发环境中使用sharp库处理图片。</p>
+<p><a href="https://github.com/lovell/sharp" target="_blank" rel="external">sharp</a>是由伦敦的一位开发者<a href="https://github.com/lovell" target="_blank" rel="external">lovell</a>开发的基于libvips的一款轻快的图片处理库。<br>以下是原文介绍，详情可以戳上面的Github链接了解更多。</p>
+<blockquote>
+<p>The fastest Node.js module for resizing JPEG, PNG, WebP and TIFF images. Uses the libvips library.</p>
+</blockquote>
+<h2 id="安装">安装</h2>
+<p>关于安装需要注意除了基本的Node.js开发环境之外，还需要预装libvips库。关于如何在各个平台上安装vips，其GitHub页面已经给出详细的参考，我在CentOS和Mac OS上都已成功预装。不过在Mac上安装时遇到一些问题，已经在之前的文章中给出相应的解决过程。</p>
+<p>按照官方提示安装好sharp之后就可以开始对图片进行裁切、缩放、旋转，并且可以更改图片的输出格式，质量等。这些已经完全能满足裁切头像的需求了！</p>
+<h2 id="使用">使用</h2>
+<p>首先自然是需要引入sharp库</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> sharp = <span class="built_in">require</span>(<span class="string">'sharp'</span>);</div></pre></td></tr></table></figure>
+
+<h4 id="风格">风格</h4>
+<p>sharp使用的是跟jQuery类似的链式操作风格：<code>sharp(&#39;input.jpg&#39;).resize(300, 300).max() ...</code></p>
+<h4 id="获取图片信息">获取图片信息</h4>
+<p>在对图片进行处理之前，往往需要先获取图片的尺寸格式等基本进行。sharp中可以通过<code>metadata()</code>获取图片的一些重要的元数据，比如尺寸、格式和颜色空间等。</p>
+<p>…未完</p>
 
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://shieldax.github.io/2014/10/31/Error-Cache-Miss-调试错误/" data-id="eksu1nwjehzizbdb" class="article-share-link" data-share="baidu">分享到</a>
+        <a data-url="http://shieldax.github.io/2014/10/31/锋利的Node-js图片处理库sharp/" data-id="a412fyh9kg5xcayh" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
-        <a href="http://shieldax.github.io/2014/10/31/Error-Cache-Miss-调试错误/#ds-thread" class="article-comment-link">文章评论</a>
+        <a href="http://shieldax.github.io/2014/10/31/锋利的Node-js图片处理库sharp/#ds-thread" class="article-comment-link">文章评论</a>
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Chrome/">Chrome</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web/">Web</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/调试/">调试</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node-js-图片处理-库/">Node.js 图片处理 库</a></li></ul>
 
     </footer>
   </div>
@@ -129,19 +144,10 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     
 <nav id="article-nav">
   
-    <a href="/2014/10/31/Passport笔记/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Passport笔记
-        
-      </div>
-    </a>
   
-  
-    <a href="/2014/10/31/解决在OS-X安装libvips图形库的问题/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2014/10/31/Passport笔记/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">解决在OS X安装libvips图形库的问题</div>
+      <div class="article-nav-title">Passport笔记</div>
     </a>
   
 </nav>
@@ -151,7 +157,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 
   <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2014/10/31/Error-Cache-Miss-调试错误/" data-title="Error Cache Miss 调试错误" data-url="http://shieldax.github.io/2014/10/31/Error-Cache-Miss-调试错误/"></div>
+    <div id="ds-thread" class="ds-thread" data-thread-key="2014/10/31/锋利的Node-js图片处理库sharp/" data-title="锋利的Node.js图片处理库sharp" data-url="http://shieldax.github.io/2014/10/31/锋利的Node-js图片处理库sharp/"></div>
   </section>
 </section>
         

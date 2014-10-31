@@ -3,20 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Error Cache Miss 调试错误 | CODESIGN</title>
+  <title>Tag: Node.js 图片处理 库 | CODESIGN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在使用jqueryForm进行调试的时候（以Ajax方式提交表单），发现程序逻辑运行没有问题，但是每次打开chrome的开发者工具，console中总是出现一条Failed to load resource: net::ERR_CACHE_MISS的错误信息，怀疑是Jade编译出的javascript文本有问题，发现分离出单独的js脚本也没有效果。
-最后在百度上搜到了阿里云的一个帖子：http:/">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Error Cache Miss 调试错误">
-<meta property="og:url" content="http://shieldax.github.io/2014/10/31/Error-Cache-Miss-调试错误/">
+  <meta name="description" content="code and design 程序和设计">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CODESIGN">
+<meta property="og:url" content="http://shieldax.github.io/tags/Node-js-图片处理-库/">
 <meta property="og:site_name" content="CODESIGN">
-<meta property="og:description" content="在使用jqueryForm进行调试的时候（以Ajax方式提交表单），发现程序逻辑运行没有问题，但是每次打开chrome的开发者工具，console中总是出现一条Failed to load resource: net::ERR_CACHE_MISS的错误信息，怀疑是Jade编译出的javascript文本有问题，发现分离出单独的js脚本也没有效果。
-最后在百度上搜到了阿里云的一个帖子：http:/">
+<meta property="og:description" content="code and design 程序和设计">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Error Cache Miss 调试错误">
-<meta name="twitter:description" content="在使用jqueryForm进行调试的时候（以Ajax方式提交表单），发现程序逻辑运行没有问题，但是每次打开chrome的开发者工具，console中总是出现一条Failed to load resource: net::ERR_CACHE_MISS的错误信息，怀疑是Jade编译出的javascript文本有问题，发现分离出单独的js脚本也没有效果。
-最后在百度上搜到了阿里云的一个帖子：http:/">
+<meta name="twitter:title" content="CODESIGN">
+<meta name="twitter:description" content="code and design 程序和设计">
 
   
     <link rel="alternative" href="/atom.xml" title="CODESIGN" type="application/atom+xml">
@@ -80,79 +77,39 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Error-Cache-Miss-调试错误" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/10/31/Error-Cache-Miss-调试错误/" class="article-date">
-  <time datetime="2014-10-31T01:06:42.000Z" itemprop="datePublished">10月 31 2014</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      Error Cache Miss 调试错误
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2014" class="archive-year">2014</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2014/10/31/锋利的Node-js图片处理库sharp/" class="archive-article-date">
+  <time datetime="2014-10-31T14:12:59.000Z" itemprop="datePublished">10月 31</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2014/10/31/锋利的Node-js图片处理库sharp/">锋利的Node.js图片处理库sharp</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在使用jqueryForm进行调试的时候（以Ajax方式提交表单），发现程序逻辑运行没有问题，但是每次打开chrome的开发者工具，console中总是出现一条<code>Failed to load resource: net::ERR_CACHE_MISS</code>的错误信息，怀疑是Jade编译出的javascript文本有问题，发现分离出单独的js脚本也没有效果。</p>
-<p>最后在百度上搜到了阿里云的一个帖子：<br><a href="http://bbs.aliyun.com/read/178977.html" target="_blank" rel="external">http://bbs.aliyun.com/read/178977.html</a></p>
-<p>核心内容是这样的：</p>
-<p>开发人员工具载入缓存的时候，说找不到资源。<br>问题根本在于你先打开页面，再打开chrome的开发人员工具。而页面本身设置了<br><a id="more"></a><br>no-store 无缓存，所以后者打开的开发人员工具去不到缓存。如果你已经打开开发者工具的时候，再刷新就不会有这个错误了…</p>
-<p>检查了一下页面Header，果然是通过<code>Cache-Control: max-age=0</code>使得页面没有缓存可以被读取。<br>好在不影响程序本身的运行，暂时可以忽略。</p>
-<p>Continue Coding！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://shieldax.github.io/2014/10/31/Error-Cache-Miss-调试错误/" data-id="eksu1nwjehzizbdb" class="article-share-link" data-share="baidu">分享到</a>
-      
-
-      
-        <a href="http://shieldax.github.io/2014/10/31/Error-Cache-Miss-调试错误/#ds-thread" class="article-comment-link">文章评论</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Chrome/">Chrome</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web/">Web</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/调试/">调试</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2014/10/31/Passport笔记/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Passport笔记
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2014/10/31/解决在OS-X安装libvips图形库的问题/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">解决在OS X安装libvips图形库的问题</div>
-    </a>
-  
-</nav>
-
-  
 </article>
-
-
-  <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2014/10/31/Error-Cache-Miss-调试错误/" data-title="Error Cache Miss 调试错误" data-url="http://shieldax.github.io/2014/10/31/Error-Cache-Miss-调试错误/"></div>
-  </section>
+  
+  
+    </div></section>
+  
 </section>
         
           <aside id="sidebar">
