@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Passport笔记 | CODESIGN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Things to be notice 写在前面：这篇文主要是Passport官方文档的阅读笔记，多有纰漏，仅做参考。This post only notes things need to be noted while taking advantage of Passport.
+Passport是一个可扩展的（用户）认证框架；Passport借助于其丰富可选的认证策略帮你搭建现代的用户认证系统。（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Passport笔记">
+<meta property="og:url" content="http://yoursite.com/2014/10/31/Passport笔记/">
+<meta property="og:site_name" content="CODESIGN">
+<meta property="og:description" content="Things to be notice 写在前面：这篇文主要是Passport官方文档的阅读笔记，多有纰漏，仅做参考。This post only notes things need to be noted while taking advantage of Passport.
+Passport是一个可扩展的（用户）认证框架；Passport借助于其丰富可选的认证策略帮你搭建现代的用户认证系统。（">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Passport笔记">
+<meta name="twitter:description" content="Things to be notice 写在前面：这篇文主要是Passport官方文档的阅读笔记，多有纰漏，仅做参考。This post only notes things need to be noted while taking advantage of Passport.
+Passport是一个可扩展的（用户）认证框架；Passport借助于其丰富可选的认证策略帮你搭建现代的用户认证系统。（">
+
+  
+    <link rel="alternative" href="/atom.xml" title="CODESIGN" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">CODESIGN</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Code and Design</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Passport笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/31/Passport笔记/" class="article-date">
+  <time datetime="2014-10-31T01:11:43.000Z" itemprop="datePublished">Oct 31 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Passport笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Things to be notice 写在前面：这篇文主要是Passport官方文档的阅读笔记，多有纰漏，仅做参考。This post only notes things need to be noted while taking advantage of Passport.</p>
+<p>Passport是一个可扩展的（用户）认证框架；<br>Passport借助于其丰富可选的认证策略帮你搭建现代的用户认证系统。（包括OAuth以及OpenID）</p>
+<h3 id="Strategies">Strategies</h3>
+<blockquote>
+<p>Before asking Passport to authenticate a request, the strategy (or strategies) used by an application must be configured.</p>
+</blockquote>
+<p>在使用Passport进行（用户）认证之前，必须配置你的应用需要使用的认证策略。</p>
+<p>比如使用<code>LocalStrategy</code>可以搭建单纯的用户名密码认证（即登录，注册等）。</p>
+<h4 id="Verify_Callback">Verify Callback</h4>
+<p>认证回调用于验证用户是否拥有登录资格<br><a id="more"></a><br><code>function (username, password, done)</code></p>
+<p>通过done回调函数返回认证结果</p>
+<p><code>done(error, user, info)</code></p>
+<h3 id="中间件">中间件</h3>
+<p>在以Connect或者Express为基础的应用中，需要用到<code>passport.initialize()</code>这个中间件来对Passport进行初始化。<br>另外如果需要启用Session来保存用户对话，还需要在系统启用session后（即<code>app.use(express.session());</code>）引入<code>passport.session()</code>中间件<br>才可以保证对话能被成功地存起来。</p>
+<blockquote>
+<p>If enabled, be sure to use express.session() before passport.session() to ensure that the login session is restored in the correct order.</p>
+</blockquote>
+<h3 id="Sessions">Sessions</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">passport.serializeUser(<span class="function"><span class="keyword">function</span><span class="params">(user, done)</span> </span>{</div><div class="line">  done(<span class="literal">null</span>, user.id);</div><div class="line">});</div><div class="line"></div><div class="line">passport.deserializeUser(<span class="function"><span class="keyword">function</span><span class="params">(id, done)</span> </span>{</div><div class="line">  User.findById(id, <span class="function"><span class="keyword">function</span><span class="params">(err, user)</span> </span>{</div><div class="line">    done(err, user);</div><div class="line">  });</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>对用户对话进行“编解码”，由应用层决定并完成编解码方式，并且不受认证层的干扰和限制。</p>
+<h3 id="内置操作">内置操作</h3>
+<h4 id="Log_In">Log In</h4>
+<p>Passport提供了<code>req.login()</code>别名<code>req.logIn()</code>的方法完成对话创建。<br>注意，<code>passport.authenticate()</code>中间件已经包含了对此方法的调用。一般只在允许用户注册成功后立即将其账户登录时，手动调用<code>req.login()</code>完成对话的创建。</p>
+<h3 id="Authorize">Authorize</h3>
+<p>现在很多应用会有这样的需求：允许用户用N个第三方账户登录系统。于是就需要让用户进行多个第三方的授权，即通常所说的Connect。中文多对应为“绑定”。<br>当然用户一般可以随时“解绑”~</p>
+<p>这样用户就可以同时绑定微博和QQ以及人人网等账号，并在随后用任意的方式登录应用。如此一来用户体验会得到提升，并且应用可以获得找到潜在用户的途径，不解释 → →</p>
+<p>当然对于绑定来说，用户首先（不管用哪一方）要能登录到应用中来，然后才可能绑到已经登录的账号上。</p>
+<p>对于这种需求，passport提供了另一个接口<code>passport.authorize()</code></p>
+<h3 id="User_Profile">User Profile</h3>
+<p>标准化用户信息的常用字段：</p>
+<ul>
+<li><code>provider</code>{String} 认证方，提供认证的第三方服务的名称</li>
+<li><code>id</code>{String} 用户在第三方的标识ID</li>
+<li><code>displayName</code>{String} 顾名思义，在第三方显示用的名字，相当于昵称</li>
+<li><code>name</code>{Object}<ul>
+<li><code>familyName</code>{String} 姓氏，西方文化中的 Last name</li>
+<li><code>givenName</code>{String} 名字，对应 First Name</li>
+<li><code>middleName</code>{String} 中文没有对应概念，一般只出现在一些西方国家的人名中，涉及较少</li>
+</ul>
+</li>
+<li><code>emails</code>{Array}[n]<ul>
+<li><code>value</code>{String}实际存放邮件地址的字段</li>
+<li><code>type</code>{String}按照标准区分电子邮箱<em>用途</em>，如家庭，工作等</li>
+</ul>
+</li>
+<li><code>photos</code>{Array}[n]<ul>
+<li><code>value</code>{String}实际存放图片地址的字段</li>
+</ul>
+</li>
+</ul>
+<p>以上只是较为基本常用的信息字段，各个第三方提供的个人信息不仅相同，通常还是需要查看具体的官方相关说明。</p>
+<p>需要提一下，两个我时常会混淆的单词：</p>
+<ol>
+<li>Authorize [ˈɔːθəraɪz] 授权</li>
+<li>Authenticate [ɔː’θentɪkeɪt] 认证，验证</li>
+</ol>
+<p>To Be Append…</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/10/31/Passport笔记/" data-id="qwanayy8v9g3hkk1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2014/10/31/Error-Cache-Miss-调试错误/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Error Cache Miss 调试错误</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/">Chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/libvips/">libvips</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sharp/">sharp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安装/">安装</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文章/">文章</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记述/">记述</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/调试/">调试</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Chrome/" style="font-size: NaNpx;">Chrome</a><a href="/tags/Web/" style="font-size: NaNpx;">Web</a><a href="/tags/libvips/" style="font-size: NaNpx;">libvips</a><a href="/tags/sharp/" style="font-size: NaNpx;">sharp</a><a href="/tags/安装/" style="font-size: NaNpx;">安装</a><a href="/tags/文章/" style="font-size: NaNpx;">文章</a><a href="/tags/记述/" style="font-size: NaNpx;">记述</a><a href="/tags/调试/" style="font-size: NaNpx;">调试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/10/31/Passport笔记/">Passport笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2014/10/31/Error-Cache-Miss-调试错误/">Error Cache Miss 调试错误</a>
+          </li>
+        
+          <li>
+            <a href="/2014/10/31/解决在OS-X安装libvips图形库的问题/">解决在OS X安装libvips图形库的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2014/10/30/开篇/">开篇</a>
+          </li>
+        
+          <li>
+            <a href="/2014/10/30/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 shieldax<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>
