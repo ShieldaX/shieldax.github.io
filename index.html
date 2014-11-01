@@ -140,7 +140,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://shieldax.github.io/2014/10/31/锋利的Node-js图片处理库sharp/" data-id="28qt4o7m1rys0327" class="article-share-link" data-share="baidu">分享到</a>
+        <a data-url="http://shieldax.github.io/2014/10/31/锋利的Node-js图片处理库sharp/" data-id="v87mdq39jiv2fqcz" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
@@ -188,17 +188,61 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>在使用Passport进行（用户）认证之前，必须配置你的应用需要使用的认证策略。</p>
 <p>比如使用<code>LocalStrategy</code>可以搭建单纯的用户名密码认证（即登录，注册等）。</p>
 <h4 id="Verify_Callback">Verify Callback</h4>
-<p>认证回调用于验证用户是否拥有登录资格<br>
-        
-          <p class="article-more-link">
-            <a href="/2014/10/31/Passport笔记/#more">阅读全文</a>
-          </p>
-        
+<p>认证回调用于验证用户是否拥有登录资格<br><code>function (username, password, done)</code></p>
+<p>通过done回调函数返回认证结果</p>
+<p><code>done(error, user, info)</code></p>
+<h3 id="中间件">中间件</h3>
+<p>在以Connect或者Express为基础的应用中，需要用到<code>passport.initialize()</code>这个中间件来对Passport进行初始化。<br>另外如果需要启用Session来保存用户对话，还需要在系统启用session后（即<code>app.use(express.session());</code>）引入<code>passport.session()</code>中间件<br>才可以保证对话能被成功地存起来。</p>
+<blockquote>
+<p>If enabled, be sure to use express.session() before passport.session() to ensure that the login session is restored in the correct order.</p>
+</blockquote>
+<h3 id="Sessions">Sessions</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">passport.serializeUser(<span class="function"><span class="keyword">function</span><span class="params">(user, done)</span> </span>{</div><div class="line">  done(<span class="literal">null</span>, user.id);</div><div class="line">});</div><div class="line"></div><div class="line">passport.deserializeUser(<span class="function"><span class="keyword">function</span><span class="params">(id, done)</span> </span>{</div><div class="line">  User.findById(id, <span class="function"><span class="keyword">function</span><span class="params">(err, user)</span> </span>{</div><div class="line">    done(err, user);</div><div class="line">  });</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>对用户对话进行“编解码”，由应用层决定并完成编解码方式，并且不受认证层的干扰和限制。</p>
+<h3 id="内置操作">内置操作</h3>
+<h4 id="Log_In">Log In</h4>
+<p>Passport提供了<code>req.login()</code>别名<code>req.logIn()</code>的方法完成对话创建。<br>注意，<code>passport.authenticate()</code>中间件已经包含了对此方法的调用。一般只在允许用户注册成功后立即将其账户登录时，手动调用<code>req.login()</code>完成对话的创建。</p>
+<h3 id="Authorize">Authorize</h3>
+<p>现在很多应用会有这样的需求：允许用户用N个第三方账户登录系统。于是就需要让用户进行多个第三方的授权，即通常所说的Connect。中文多对应为“绑定”。<br>当然用户一般可以随时“解绑”~</p>
+<p>这样用户就可以同时绑定微博和QQ以及人人网等账号，并在随后用任意的方式登录应用。如此一来用户体验会得到提升，并且应用可以获得找到潜在用户的途径，不解释 → →</p>
+<p>当然对于绑定来说，用户首先（不管用哪一方）要能登录到应用中来，然后才可能绑到已经登录的账号上。</p>
+<p>对于这种需求，passport提供了另一个接口<code>passport.authorize()</code></p>
+<h3 id="User_Profile">User Profile</h3>
+<p>标准化用户信息的常用字段：</p>
+<ul>
+<li><code>provider</code>{String} 认证方，提供认证的第三方服务的名称</li>
+<li><code>id</code>{String} 用户在第三方的标识ID</li>
+<li><code>displayName</code>{String} 顾名思义，在第三方显示用的名字，相当于昵称</li>
+<li><code>name</code>{Object}<ul>
+<li><code>familyName</code>{String} 姓氏，西方文化中的 Last name</li>
+<li><code>givenName</code>{String} 名字，对应 First Name</li>
+<li><code>middleName</code>{String} 中文没有对应概念，一般只出现在一些西方国家的人名中，涉及较少</li>
+</ul>
+</li>
+<li><code>emails</code>{Array}[n]<ul>
+<li><code>value</code>{String}实际存放邮件地址的字段</li>
+<li><code>type</code>{String}按照标准区分电子邮箱<em>用途</em>，如家庭，工作等</li>
+</ul>
+</li>
+<li><code>photos</code>{Array}[n]<ul>
+<li><code>value</code>{String}实际存放图片地址的字段</li>
+</ul>
+</li>
+</ul>
+<p>以上只是较为基本常用的信息字段，各个第三方提供的个人信息不仅相同，通常还是需要查看具体的官方相关说明。</p>
+<p>需要提一下，两个我时常会混淆的单词：</p>
+<ol>
+<li>Authorize [ˈɔːθəraɪz] 授权</li>
+<li>Authenticate [ɔː’θentɪkeɪt] 认证，验证</li>
+</ol>
+<p>To Be Append…</p>
+
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://shieldax.github.io/2014/10/31/Passport笔记/" data-id="wt1c0u3cny0k6yey" class="article-share-link" data-share="baidu">分享到</a>
+        <a data-url="http://shieldax.github.io/2014/10/31/Passport笔记/" data-id="65vr98pgj3es62my" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
@@ -248,7 +292,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://shieldax.github.io/2014/10/31/Error-Cache-Miss-调试错误/" data-id="d5zrnakx5z9noizb" class="article-share-link" data-share="baidu">分享到</a>
+        <a data-url="http://shieldax.github.io/2014/10/31/Error-Cache-Miss-调试错误/" data-id="k4jbko6cl52y9e2y" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
@@ -321,7 +365,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://shieldax.github.io/2014/10/31/解决在OS-X安装libvips图形库的问题/" data-id="zk5b20l11m730huq" class="article-share-link" data-share="baidu">分享到</a>
+        <a data-url="http://shieldax.github.io/2014/10/31/解决在OS-X安装libvips图形库的问题/" data-id="al3ftvexoh05gp4a" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
@@ -338,9 +382,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 
   
-    <article id="post-开篇" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-写在前面" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2014/10/30/开篇/" class="article-date">
+    <a href="/2014/10/30/写在前面/" class="article-date">
   <time datetime="2014-10-30T14:31:44.000Z" itemprop="datePublished">10月 30 2014</time>
 </a>
     
@@ -352,7 +396,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/30/开篇/">写在前面</a>
+      <a class="article-title" href="/2014/10/30/写在前面/">写在前面</a>
     </h1>
   
 
@@ -367,7 +411,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>Hexo是一款来自台北的童鞋(tommy351)[<a href="https://github.com/tommy351]开发的博客程序。" target="_blank" rel="external">https://github.com/tommy351]开发的博客程序。</a><br>至于Hexo相关的介绍和安装配置方式，网上有很多资料可用，我就没必要赘述了，这里推荐一篇写的比较详细的win下搭建方法博文<a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="external">hexo你的博客</a></p>
 <p>其实决定尝试使用Hexo一个重要原因是其基于自己相对熟悉的 Node.js开发，考虑到以后客(xia)制(zhe)化(teng)的需求，于是放弃了自己不太熟悉的基于 Ruby 的 Octpress。</p>
 <p>和 Octpress 比起来，Hexo创建新文章的时候可以直接用中文名字：</p>
-<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo <span class="keyword">new</span> 开篇</div></pre></td></tr></table></figure>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo <span class="keyword">new</span> 写在前面</div></pre></td></tr></table></figure>
 
 <p>通过上面的命令就创建了本篇文章所用的文档，不需要针对中文环境进行额外的配置（当然通过额外的配置，octpress也可以几次直接创建中文标题的博客- -）。这样一来只要标题里没有空格或者<br>特殊字符，连引号都可以省略了。比起Octopress的<code>rake new_post[&#39;title&#39;]</code>方式感觉更加顺手。</p>
 <p>至于内容的编辑，自然也是用 <a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="external">Markdown</a><br>语法来撰写。Markdown的编辑器选择上就很丰富了，比较出色有Mac下的Mou App，或者选择跨平台易于扩展的 Sublime Text编<br>辑器安装 Markdown 的相关插件。</p>
@@ -379,11 +423,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://shieldax.github.io/2014/10/30/开篇/" data-id="y6bwmgikj9g2otil" class="article-share-link" data-share="baidu">分享到</a>
+        <a data-url="http://shieldax.github.io/2014/10/30/写在前面/" data-id="dtntoz5p9w2v8wq9" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
-        <a href="http://shieldax.github.io/2014/10/30/开篇/#ds-thread" class="article-comment-link">文章评论</a>
+        <a href="http://shieldax.github.io/2014/10/30/写在前面/#ds-thread" class="article-comment-link">文章评论</a>
       
 
       
@@ -453,7 +497,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
           </li>
         
           <li>
-            <a href="/2014/10/30/开篇/">写在前面</a>
+            <a href="/2014/10/30/写在前面/">写在前面</a>
           </li>
         
       </ul>
