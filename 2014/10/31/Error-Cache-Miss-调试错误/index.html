@@ -105,7 +105,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         <p>在使用jqueryForm进行调试的时候（以Ajax方式提交表单），发现程序逻辑运行没有问题，但是每次打开chrome的开发者工具，console中总是出现一条<code>Failed to load resource: net::ERR_CACHE_MISS</code>的错误信息，怀疑是Jade编译出的javascript文本有问题，发现分离出单独的js脚本也没有效果。</p>
 <p>最后在百度上搜到了阿里云的一个帖子：<br><a href="http://bbs.aliyun.com/read/178977.html" target="_blank" rel="external">http://bbs.aliyun.com/read/178977.html</a></p>
 <p>核心内容是这样的：</p>
-<p>开发人员工具载入缓存的时候，说找不到资源。<br>问题根本在于你先打开页面，再打开chrome的开发人员工具。而页面本身设置了<br><a id="more"></a><br>no-store 无缓存，所以后者打开的开发人员工具去不到缓存。如果你已经打开开发者工具的时候，再刷新就不会有这个错误了…</p>
+<p>开发人员工具载入缓存的时候，说找不到资源。<br>问题根本在于你先打开页面，再打开chrome的开发人员工具。而页面本身设置了no-store 无缓存，所以后者打开的开发人员工具去不到缓存。如果你已经打开开发者工具的时候，再刷新就不会有这个错误了…</p>
 <p>检查了一下页面Header，果然是通过<code>Cache-Control: max-age=0</code>使得页面没有缓存可以被读取。<br>好在不影响程序本身的运行，暂时可以忽略。</p>
 <p>Continue Coding！</p>
 
@@ -209,7 +209,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
           </li>
         
           <li>
-            <a href="/2014/10/30/开篇/">开篇</a>
+            <a href="/2014/10/30/开篇/">写在前面</a>
           </li>
         
       </ul>
