@@ -4,7 +4,7 @@
   <subtitle><![CDATA[关于程序和设计]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://shieldax.github.io/"/>
-  <updated>2014-11-06T09:02:34.030Z</updated>
+  <updated>2014-11-06T09:05:44.415Z</updated>
   <id>http://shieldax.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://shieldax.github.io/2014/11/06/Mac%E6%88%AA%E5%9B%BE%E6%8A%80%E5%B7%A7/"/>
     <id>http://shieldax.github.io/2014/11/06/Mac截图技巧/</id>
     <published>2014-11-06T07:08:36.000Z</published>
-    <updated>2014-11-06T09:02:12.000Z</updated>
+    <updated>2014-11-06T09:05:40.000Z</updated>
     <content type="html"><![CDATA[<p>日常工作中，有时候会需要在屏幕上截图。今天分享一下如何利用Mac自带抓图应用完成我们需要的截图任务。这里分两类方法介绍：</p>
 <h2 id="菜单流">菜单流</h2>
 <p>第一类方法就是通过打开“抓图”软件，利用软件清晰明了的菜单进行截图。</p>
@@ -42,7 +42,7 @@
 <p>通过上面的组合，截图的时候很容易控制。</p>
 <p>快捷键三：截取窗口</p>
 <p>按下快捷键二后再按空格，即可切换到窗口截取模式（光标变成照相机的形状）。<br>将光标（鼠标）移动到需要截取的窗口，单击鼠标左键即可。<br><img src="http://ww1.sinaimg.cn/large/a71476e7jw1em1dlqfzwhj211c0pw463.jpg" alt="抓取窗口"></p>
-<p>可以看到抓取的窗口会带上一个漂亮的投影，档吃瞬间提高了不少 <em> _ </em><br>当然如果不需要阴影，只需要用菜单流的方式抓图窗口即可。</p>
+<p>可以看到抓取的窗口会自己带上一个漂亮的投影，赶脚档吃瞬间提高了不少 * _ *<br>当然如果不需要阴影，只需要用菜单流的方式抓图窗口即可。</p>
 <p>Happy Mac ↑</p>
 ]]></content>
     <summary type="html">
